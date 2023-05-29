@@ -13,9 +13,17 @@ add_subdirectory(lvgl)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin) 
 SET(CMAKE_CXX_FLAGS "-O3")
 
-find_package(SDL2 REQUIRED SDL2)
-include_directories(${SDL2_INCLUDE_DIRS})
+#SDL2库路径
+set(SDL2_DIR H://C/SDL2-2.26.5/x86_64-w64-mingw32)
+#SDL2头文件路径
+include_directories(${SDL2_DIR}/include)
+#SDL库的路径
+link_directories(${SDL2_DIR}/bin {SDL2_DIR}/lib)
+
+#find_package(SDL2 REQUIRED SDL2)
+#include_directories(${SDL2_INCLUDE_DIRS})
 add_executable(main main.c mouse_cursor_icon.c ${SOURCES} ${INCLUDES})
 add_compile_definitions(LV_CONF_INCLUDE_SIMPLE)
-target_link_libraries(main PRIVATE lvgl lvgl::examples lvgl::demos ${SDL2_LIBRARIES})
+#target_link_libraries(main PRIVATE lvgl lvgl::examples lvgl::demos ${SDL2_LIBRARIES})
+target_link_libraries(main PRIVATE lvgl lvgl::examples lvgl::demos SDL2 SDL2main)
 add_custom_target (run COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
